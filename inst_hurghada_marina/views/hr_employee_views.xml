@@ -1,0 +1,123 @@
+<odoo>
+	<data>
+
+		<!-- Search Views  -->
+
+        <record id="view_employee_filter" model="ir.ui.view">
+            <field name="name">hr.employee.search</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+			<field name="arch" type="xml">
+				<field name="name" position="before">
+					<field name="registration_number"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- Tree Views -->
+
+        <record id="view_employee_tree" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+					<field name="registration_number"/>
+				</field>
+			</field>
+		</record>
+
+        <record id="view_partner_tree2" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_partner_tree2"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+					<field name="registration_number"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- Form Views -->
+
+		<record id="view_employee_form" model="ir.ui.view">
+			<field name="name">hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="name" position="attributes">
+					<attribute name="placeholder">Arabic Name</attribute>
+				</field>
+				<xpath expr="//h2" position="replace">
+					<h2>
+						<field name="hm_english_name" placeholder="English Name"/>
+					</h2>
+					<field name="job_title" placeholder="Job Position"/>
+				</xpath>
+
+				<field name="category_ids" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+
+				<field name="mobile_phone" position="before">
+					<field name="hm_hire_date"/>
+					<field name="registration_number" position="move" required="1"/>
+				</field>
+
+				<field name="mobile_phone" position="attributes">
+					<attribute name="string">Personal Mobile</attribute>
+				</field>
+
+				<field name="work_phone" position="attributes">
+					<attribute name="string">Work Mobile</attribute>
+				</field>
+
+				<field name="work_email" position="after">
+					<field name="address_home_id" position="move"/>
+				</field>
+
+				<field name="address_home_id" position="after">
+					<field name="identification_id" position="move"/>
+				</field>
+
+				<field name="identification_id" position="after">
+					<field name="hm_insurance_id"/>
+				</field>
+
+				<field name="hm_insurance_id" position="after">
+					<field name="bank_account_id" position="move"/>
+				</field>
+
+				<field name="department_id" position="before">
+					<field name="contract_id" position="move"/>
+				</field>
+
+				<field name="parent_id" position="after">
+					<field name="hm_gender"/>
+				</field>
+
+				<field name="hm_gender" position="after">
+					<field name="birthday" position="move"/>
+				</field>
+
+				<field name="birthday" position="after">
+					<field name="hm_end_of_contract_date"/>
+				</field>
+
+				<field name="hm_end_of_contract_date" position="after">
+					<field name="hm_end_of_service_date"/>
+				</field>
+
+				<field name="hm_end_of_service_date" position="after">
+					<field name="user_id" position="move"/>
+				</field>
+
+				<field name="coach_id" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+
+			</field>
+		</record>
+
+	</data>
+</odoo>

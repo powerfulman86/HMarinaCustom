@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hm_boat_pricing_all,hm.boat.pricing.all,model_hm_boat_pricing,,1,1,1,1
+access_hm_boat_pricing_line_all,hm.boat.pricing.all,model_hm_boat_pricing_line,,1,1,1,1

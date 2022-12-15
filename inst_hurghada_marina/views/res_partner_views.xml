@@ -1,0 +1,138 @@
+<odoo>
+  <data>
+
+    <!-- Search Views -->
+
+    <record id="view_res_partner_filter" model="ir.ui.view">
+      <field name="name">res.partner.select</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_res_partner_filter"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="after">
+          <field name="hm_english_name"/>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- Form Views -->
+
+    <record id="view_partner_property_form" model="ir.ui.view">
+      <field name="name">res.partner.property.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account.view_partner_property_form"/>
+      <field name="priority">20</field>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='name']" position="after">
+          <field name="supplier_rank" invisible="1"/>
+        </xpath>
+
+        <xpath expr="//field[@name='function']" position="before">
+          <field name="hm_contact_type"
+            attrs="{'invisible': ['|', ('supplier_rank','&gt;',0), ('company_type','=','company')]}"/>
+        </xpath>
+
+        <xpath expr="//notebook" position="inside">
+          <page string="Vendor Extra Info" name="vendor_extra_info"
+            attrs="{'invisible': [('supplier_rank','=',0)]}">
+            <group>
+              <group>
+                <field name="hm_activity"/>
+                <field name="hm_activity_type"/>
+                <field name="hm_activity_type_code"/>
+              </group>
+              <group>
+                <field name="hm_fav_item"/>
+                <field name="hm_fav_item_2"/>
+                <field name="hm_fav_item_3"/>
+                <field name="hm_fav_item_4"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+
+        <field name="property_account_receivable_id" position="attributes">
+          <attribute name="attrs">{'required': ['|',('is_company','=',True),('parent_id','=',False)]}</attribute>
+        </field>
+        <field name="property_account_payable_id" position="attributes">
+          <attribute name="attrs">{'required': ['|',('is_company','=',True),('parent_id','=',False)]}</attribute>
+        </field>
+
+      </field>
+    </record>
+
+    <record id="res_partner_form" model="ir.ui.view">
+      <field name="name">res.partner form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="priority">40</field>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='parent_id']" position="attributes">
+          <attribute name="domain">[('customer_rank','&gt;',0),('is_company', '=', True)]</attribute>
+          <attribute name="attrs">{'required': [('company_type','=','person')], 'invisible': [('company_type','=','company')]}</attribute>
+        </xpath>
+
+        <xpath expr="//span[@name='address_name']" position="before">
+          <field name="hm_english_name" required="1"/>
+          <br/>
+          <field name="is_boat_owner" attrs="{'invisible': [('company_type','=','person')]}"/>
+          <field name="is_apartment_owner" attrs="{'invisible': [('company_type','=','person')]}"/>
+          <field name="is_apartment_renter" attrs="{'invisible': [('company_type','=','person')]}"/>
+          <field name="is_shop_renter" attrs="{'invisible': [('company_type','=','person')]}"/>
+        </xpath>
+
+        <xpath expr="//field[@name='vat']" position="before">
+          <field name="hm_governrate"/>
+        </xpath>
+
+        <xpath expr="//page[1]" position="after">
+          <page string="Boat Info" name="boat_info"
+            attrs="{'invisible': [('hm_contact_type','!=','Boat')]}">
+            <group>
+              <group>
+                <field name="hm_boat_nationality"/>
+                <field name="hm_boat_category"/>
+                <field name="hm_boat_type"/>
+                <field name="hm_boat_length"/>
+                <field name="hm_boat_width"/>
+              </group>
+              <group>
+                <field name="hm_boat_code"/>
+                <field name="hm_special_discount"/>
+              </group>
+            </group>
+          </page>
+
+          <page string="Shop Info" name="boat_info"
+            attrs="{'invisible': [('hm_contact_type','!=','Shop')]}">
+            <group>
+              <group>
+                <field name="hm_shop_area_in"/>
+                <field name="hm_shop_area_in_price"/>
+              </group>
+              <group>
+                <field name="hm_shop_area_out"/>
+                <field name="hm_shop_area_out_price"/>
+              </group>
+            </group>
+          </page>
+
+          <page string="Apartment Info" name="boat_info"
+            attrs="{'invisible': [('hm_contact_type','!=','Apartment')]}">
+            <group>
+              <group>
+                <field name="hm_apartment_area"/>
+                <field name="hm_apartment_price"/>
+              </group>
+              <group>
+              </group>
+            </group>
+          </page>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

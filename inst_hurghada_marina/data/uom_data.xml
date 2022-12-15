@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    
+    <!-- Electricity -->
+
+    <record id="uom_categ_electricity" model="uom.category">
+        <field name="name">Electricity</field>
+    </record>
+
+    <record id="product_uom_watt" model="uom.uom">
+        <field name="category_id" ref="uom_categ_electricity"/>
+        <field name="name">watt</field>
+        <field name="factor" eval="1.0"/>
+        <field name="uom_type">reference</field>
+    </record>
+    <record id="product_uom_kwatt" model="uom.uom">
+        <field name="category_id" ref="uom_categ_electricity"/>
+        <field name="name">kilowatt</field>
+        <field name="factor_inv" eval="1000"/>
+        <field name="uom_type">bigger</field>
+    </record>
+
+    <!-- Boat Duration -->
+
+    <record id="uom_categ_boat_duration" model="uom.category">
+        <field name="name">Boat Duration</field>
+    </record>
+
+    <record id="product_uom_day" model="uom.uom">
+        <field name="name">Days</field>
+        <field name="category_id" ref="uom_categ_boat_duration"/>
+        <field name="factor" eval="1.0"/>
+        <field name="uom_type">reference</field>
+    </record>
+    <record id="product_uom_month" model="uom.uom">
+        <field name="name">Months</field>
+        <field name="category_id" ref="uom_categ_boat_duration"/>
+        <field name="factor" eval="30.0"/>
+        <field name="uom_type">bigger</field>
+    </record>
+    <record id="product_uom_year" model="uom.uom">
+        <field name="name">Years</field>
+        <field name="category_id" ref="uom_categ_boat_duration"/>
+        <field name="factor" eval="360.0"/>
+        <field name="uom_type">bigger</field>
+    </record>
+
+</odoo>

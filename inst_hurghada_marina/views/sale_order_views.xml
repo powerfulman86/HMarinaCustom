@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="is_boat_owner" invisible="1"/>
+                    <field name="is_apartment_owner" invisible="1"/>
+                    <field name="is_apartment_renter" invisible="1"/>
+                    <field name="is_shop_renter" invisible="1"/>
+                    <field name="hm_contact_type"/>
+                    <field name="hm_boat_partner_id" domain="[('is_boat_owner','=',True)]"
+                        attrs="{'invisible': [('hm_contact_type','!=','Boat')]}"/>
+                    <field name="hm_shop_partner_id" domain="[('is_shop_renter','=',True)]"
+                        attrs="{'invisible': [('hm_contact_type','!=','Shop')]}"/>
+                    <field name="hm_apartment_partner_id" 
+                        domain="['|', ('is_apartment_owner','=',True), ('is_apartment_renter','=',True)]"
+                        attrs="{'invisible': [('hm_contact_type','!=','Apartment')]}"/>
+                    <field name="partner_id"
+                        attrs="{'invisible': [('hm_contact_type','!=','General'),('is_boat_owner','=',False),('is_apartment_owner','=',False),('is_apartment_renter','=',False),('is_shop_renter','=',False)]}"/>
+                    <field name="hm_boat_length" attrs="{'invisible': ['|',('hm_contact_type','!=','Boat'),('partner_id','=',False)]}"/>
+                    <field name="hm_boat_nationality"
+                         attrs="{'invisible': ['|',('hm_contact_type','!=','Boat'),('partner_id','=',False)]}"/>
+                    <field name="hm_boat_type" attrs="{'invisible': ['|',('hm_contact_type','!=','Boat'),('partner_id','=',False)]}"/>
+                </field>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('price_unit','&gt;',1)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="boat_fees" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
