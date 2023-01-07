@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- WorkOrder Stages -->
+        <record id="property_contract_stage_1" model="property.contract.stage">
+            <field name="sequence">1</field>
+            <field name="name">Draft</field>
+        </record>
+
+        <record id="property_contract_stage_2" model="property.contract.stage">
+            <field name="sequence">2</field>
+            <field name="name">Approved</field>
+        </record>
+
+        <record id="property_contract_stage_3" model="property.contract.stage">
+            <field name="sequence">3</field>
+            <field name="name">In-Progress</field>
+        </record>
+
+        <record id="property_contract_stage_4" model="property.contract.stage">
+            <field name="sequence">4</field>
+            <field name="name">Closed</field>
+        </record>
+
+        <record id="property_contract_stage_5" model="property.contract.stage">
+            <field name="sequence">5</field>
+            <field name="name">Cancel</field>
+        </record>
+    </data>
+</odoo>

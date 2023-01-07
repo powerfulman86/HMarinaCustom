@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tags -->
+        <record id="property_contract_tags_search_view" model="ir.ui.view">
+            <field name="name">property.contract.tags.view.search</field>
+            <field name="model">property.contract.tags</field>
+            <field name="arch" type="xml">
+                <search string="Search Contract Tags">
+                    <field name="name"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="property_contract_tags_form_view" model="ir.ui.view">
+            <field name="name">property.contract.tags.view.form</field>
+            <field name="model">property.contract.tags</field>
+            <field name="arch" type="xml">
+                <form string="Contract Tags">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" placeholder='e.g. "Consulting Services"'/>
+                            <field name="color" widget="color_picker"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_contract_tags_tree_view" model="ir.ui.view">
+            <field name="name">Tags</field>
+            <field name="model">property.contract.tags</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_contract_tags_action" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">property.contract.tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="search_view_id" ref="property_contract_tags_search_view"/>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Property Contract tag
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_property_contract_tags"
+                  name="Contract Tags"
+                  parent="menu_property_config"
+                  action="property_contract_tags_action"
+                  sequence="1"/>
+
+        <!--Stages-->
+        <record id="property_contract_stage_form" model="ir.ui.view">
+            <field name="name">property.contract.stage.form</field>
+            <field name="model">property.contract.stage</field>
+            <field name="arch" type="xml">
+                <form string="Contract Stage">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="sequence" groups="base.group_no_one"/>
+                            </group>
+                            <group>
+                                <field name="fold"/>
+                                <field name="category" widget="radio"/>
+                            </group>
+                        </group>
+                        <separator string="Requirements"/>
+                        <field name="description"
+                               placeholder="Give your team the requirements to move a subscription to this stage."/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_contract_stage_list" model="ir.ui.view">
+            <field name="name">property.contract.stage.list</field>
+            <field name="model">property.contract.stage</field>
+            <field name="arch" type="xml">
+                <tree string="Contract Stages">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_contract_stage_action" model="ir.actions.act_window">
+            <field name="name">Contract Stages</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.contract.stage</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Contract stage
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_property_contract_stages" name="Contract Stages"
+                  parent="menu_property_config"
+                  action="property_contract_stage_action"
+                  sequence="3"/>
+
+        <!--Rent Templates-->
+        <record id="property_rent_template_form" model="ir.ui.view">
+            <field name="name">property.rent.template.form</field>
+            <field name="model">property.rent.template</field>
+            <field name="arch" type="xml">
+                <form name="Rent Template">
+                    <header>
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet name="rent_template_form">
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="e.g. Monthly Subscription"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="type"/>
+                                <field name="rent_base"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="rent_lines" string="Lines">
+                                <div>
+                                    <field name="template_line">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id"/>
+                                            <field name="service_type"/>
+                                            <field name="price_unit"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </page>
+                            <page name="description" string="Terms and Conditions">
+                                <field name="description" placeholder="Terms and Conditions"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_rent_template_list" model="ir.ui.view">
+            <field name="name">property.rent.template.list</field>
+            <field name="model">property.rent.template</field>
+            <field name="arch" type="xml">
+                <tree string="Rent Template">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="type"/>
+                    <field name="rent_base"/>
+                    <field name="contract_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_rent_template_action" model="ir.actions.act_window">
+            <field name="name">Rent Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.rent.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Rent Template
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_property_rent_template"
+                  name="Rent Template"
+                  parent="menu_property_config"
+                  action="property_rent_template_action"
+                  sequence="4"/>
+
+        <!--Contracts-->
+        <record id="property_contracts_view_form" model="ir.ui.view">
+            <field name="name">property.contract.form</field>
+            <field name="model">property.contract</field>
+            <field name="arch" type="xml">
+                <form string="Contracts" class="o_subscription_form">
+                    <header>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                        <field name="stage_category" invisible="1"/>
+                    </header>
+                    <sheet string="Subscription">
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button"
+                                    icon="fa-book"
+                                    name="action_contract_invoice"
+                                    type="object">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                        </div>
+                        <div class="oe_title mw-100 pr-0">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group name="main">
+                            <group>
+                                <field name="type"/>
+                                <field name="partner_id"/>
+                                <field name="property_id" domain="[('type','=',type)]"/>
+                                <field name="template_id" domain="[('type','=',type)]"/>
+                            </group>
+                            <group>
+                                <field name="date_contract"/>
+                                <field name="pricelist_id" groups="product.group_product_pricelist"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="monthly_fees"/>
+                            </group>
+                        </group>
+                        <div>
+                            <notebook>
+                                <page string="Details" id="contract_dates">
+                                    <group>
+                                        <group>
+                                            <field name="date_start"/>
+                                            <field name="date_end"/>
+                                        </group>
+                                    </group>
+                                    <div>
+                                        <field name="note" placeholder="Terms and Conditions"/>
+                                    </div>
+                                    <div>
+                                        <field name="description" placeholder="Details About Contract"/>
+                                    </div>
+                                </page>
+                                <page name="contract_lines" string="Lines">
+                                    <div>
+                                        <field name="contract_line">
+                                            <tree editable="bottom">
+                                                <field name="sequence" widget="handle"/>
+                                                <field name="product_id"/>
+                                                <field name="service_type" invisible="1"/>
+                                                <field name="price_unit"/>
+                                            </tree>
+                                        </field>
+                                    </div>
+                                </page>
+                                <page string="Other Info" id="other_info">
+                                    <group>
+                                        <group>
+                                            <field name="to_renew"/>
+                                            <field name="user_id"/>
+                                            <field name="team_id"/>
+                                        </group>
+                                        <group string="Invoicing" name="invoicing" colspan="2">
+                                            <field name="payment_term_id" string="Payment Terms"/>
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_contracts_view_kanban" model="ir.ui.view">
+            <field name="name">property.contract.kanban</field>
+            <field name="model">property.contract</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" class="o_kanban_mobile" sample="1">
+                    <field name="user_id"/>
+                    <field name="stage_id"/>
+                    <field name="to_renew"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <strong class="float-right">
+
+                                    </strong>
+                                    <div class="o_kanban_record_title">
+                                        <field name="partner_id"/>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <div t-if="record.to_renew.raw_value"
+                                             class="badge badge-warning border-0 float-right mt4">
+                                            To Renew
+                                        </div>
+                                        <field name="name"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="property_contracts_view_activity" model="ir.ui.view">
+            <field name="name">property.contract.activity</field>
+            <field name="model">property.contract</field>
+            <field name="arch" type="xml">
+                <activity string="Contracts">
+                    <templates>
+                        <div t-name="activity-box">
+                            <div>
+                                <field name="name" display="full"/>
+                                <field name="partner_id" muted="1" display="full"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
+
+        <record id="property_contracts_view_list" model="ir.ui.view">
+            <field name="name">property.contract.list</field>
+            <field name="model">property.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts" sample="1">
+                    <field name="name" readonly="1" decoration-bf="1"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="property_id" readonly="1"/>
+                    <field name="template_id" readonly="1"/>
+                    <field name="user_id" optional="show" widget="many2one_avatar_user"/>
+                    <field name="team_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                    <field name="stage_id" widget="badge"/>
+                    <field name="to_renew" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="property_contracts_view_cohort" model="ir.ui.view">
+            <field name="name">property.contract.cohort</field>
+            <field name="model">property.contract</field>
+            <field name="arch" type="xml">
+                <cohort string="Contracts" date_start="date_start" date_stop="date_end" interval="month" sample="1"/>
+            </field>
+        </record>
+
+        <record id="property_contracts_action" model="ir.actions.act_window">
+            <field name="name">Contracts</field>
+            <field name="res_model">property.contract</field>
+            <field name="view_mode">kanban,tree,form,cohort,activity</field>
+            <field name="context">{ "search_default_my_contracts":1 }</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" eval='False'/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Contract
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_property_contracts" name="Contracts" parent="menu_contracts_ids"
+                  action="property_contracts_action" sequence="1"/>
+    </data>
+</odoo>

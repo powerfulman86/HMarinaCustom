@@ -1,0 +1,23 @@
+<odoo>
+    <!--Property Main Menu -->
+    <menuitem id="menu_property_main"
+              name="Property Management"
+              web_icon="property_management,static/description/icon.png"/>
+
+    <!--Property Menu -->
+    <menuitem id="menu_contracts_ids"
+              name="Contracts"
+              parent="menu_property_main"
+              sequence="8"/>
+
+    <menuitem id="menu_property_ids"
+              name="Properties"
+              parent="menu_property_main"
+              sequence="9"/>
+
+    <menuitem id="menu_property_config"
+              name="Configurations"
+              parent="menu_property_main"
+              sequence="10"/>
+
+</odoo>
